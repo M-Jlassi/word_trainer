@@ -7,7 +7,10 @@ async function getFirstWord()
 function displayNextWord(nextWord = undefined)
 {
   if (nextWord != undefined)
+  {
     document.getElementById("word-to-find").textContent = nextWord;
+    document.getElementById("answer").value = "";
+  }
   else
   {
     getFirstWord().then(responseJSON =>
