@@ -1,3 +1,4 @@
+import { getEditDistance } from "./levenshtein";
 import { Word } from "./read_csv";
 
 interface Result
@@ -22,19 +23,29 @@ class WordsList
         this.results = [];
     }
 
-    verifyTraduction(traduction: string): number
+    verifyTraduction(traduction: string): { "numberOfTraductionsVerified": number,
+                                            "wordVerified": Word,
+                                            "successPercentage": number }
     {
         const remainingWords: Word[] = this.remainingWords;
         if (remainingWords.length == 0)
-            return -1;
-
+            return {
+                "wordVerified": this.currentWord,
+                "successPercentage": -1,
+                "numberOfTraductionsVerified": -1
+            };
         const indexToVerify: number = remainingWords.findIndex(word =>
         {
-            return word.german == this.currentWord.german;
+            return word.french == this.currentWord.french;
         });
         const wordToVerify: Word = remainingWords[indexToVerify];
         let traductionIsCorrect: boolean = false;
-        if (wordToVerify.french.includes(traduction))
+
+        const editDistance = getEditDistance(traduction, wordToVerify.german);
+        const successPercentage = calculateSuccessPercentage(editDistance,
+                                                             wordToVerify.german.length);
+
+        if (wordToVerify.german.includes(traduction))
             traductionIsCorrect = true;
         this.results.push(
         {
@@ -43,8 +54,14 @@ class WordsList
             "traductionIsCorrect": traductionIsCorrect
         });
         remainingWords.splice(indexToVerify, 1);
+
         const numberOfTraductionsVerified: number = this.totalNumberOfWords - remainingWords.length;
-        return numberOfTraductionsVerified;
+
+        return {
+            "wordVerified": this.currentWord,
+            "successPercentage": successPercentage,
+            "numberOfTraductionsVerified": numberOfTraductionsVerified
+        }
     }
 
     getNextWord(): Word
@@ -64,5 +81,15 @@ function getRandomInt(max: number): number {
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+function calculateSuccessPercentage(editDistance: number, wordLength: number)
+{
+    const failureRatio = editDistance / wordLength;
+    if (failureRatio > 1)
+        return 0;
+    
+    const successRatio = (failureRatio - 1) * (-1);
+    const successPercentage = successRatio * 100;
 
+    return Math.round(successPercentage);
+}
 export { WordsList, Result };

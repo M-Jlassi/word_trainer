@@ -27,9 +27,10 @@ function verifyWordIfKeyIsEnter(event)
       .then(responseJSON =>
       {
         updateNumberOfTraductionsVerified(responseJSON.numberOfTraductionsVerified);
+        displayTraductionResult(responseJSON);
         displayNextWord(responseJSON.nextWord);
         if (responseJSON.listIsFinished)
-          displayResults();
+          displayFinalResults();
       });
   }
 }
@@ -39,14 +40,45 @@ function updateNumberOfTraductionsVerified(numberOfTraductionsVerified)
   document.getElementById("number-of-words-verified").textContent = numberOfTraductionsVerified;
 }
 
-function displayResults()
+function displayTraductionResult(responseJSON)
+{
+  const wrapper = document.createElement("div");
+
+  const successPercentage = document.createElement("span");
+  successPercentage.textContent = responseJSON.successPercentage;
+  wrapper.appendChild(successPercentage);
+
+  const wordEnteredByUser = document.createElement("span");
+  wordEnteredByUser.textContent = responseJSON.wordEnteredByUser;
+  wrapper.appendChild(wordEnteredByUser);
+
+  const germanWordVerified = document.createElement("span");
+  germanWordVerified.classList.add("span--bold")
+  germanWordVerified.textContent = responseJSON.germanWordVerified; 
+  wrapper.appendChild(germanWordVerified);
+
+  const frenchWordVerified = document.createElement("span");
+  frenchWordVerified.textContent = responseJSON.frenchWordVerified; 
+  wrapper.appendChild(frenchWordVerified);
+
+  const results = document.getElementById("results");
+  if (results.children.length == 0)
+    results.appendChild(wrapper);
+  else
+  {
+    const firstChildren = results.children[0];
+    results.insertBefore(wrapper, firstChildren);
+  }
+}
+
+function displayFinalResults()
 {
   fetch("/api/get-results")
     .then(response => response.json())
-    .then(createResultsHTML)
+    .then(createFinalResultsHTML)
 }
 
-function createResultsHTML(responseJSON)
+function createFinalResultsHTML(responseJSON)
 {
   const wrapper = document.createElement("div");
   for (const result of responseJSON.results)
@@ -96,7 +128,7 @@ function createResultsHTML(responseJSON)
     wrapper.appendChild(traduction);
     wrapper.appendChild(document.createElement("br"));
   }
-  document.getElementById("results").appendChild(wrapper);
+  document.getElementById("final-results").appendChild(wrapper);
 }
 
 (displayNextWord)();

@@ -10,11 +10,11 @@
         <h1>Word trainer</h1>
         <div>
             <div>
-                <h2>Word to find (German)</h2>
+                <h2>Word to find (French)</h2>
                 <span id="word-to-find"></span>
             </div>
             <div>
-                <h2>Your answer (French)</h2>
+                <h2>Your answer (German)</h2>
                 <input id="answer"></input>
             </div>
         </div>
@@ -22,11 +22,35 @@
             <h2>Number of traductions verified</h2>
             <span id="number-of-words-verified"></span>
         </div>
+        <div>
+            <h2>
+                <h2>Results</h2>
+                <div id="results"></div>
+            </h2>
+        </div>
         <div >
-            <h2>Results</h2>
-            <div id="results"></div>
+            <h2>Final results</h2>
+            <div id="final-results"></div>
         </div>
     </body>
 
     <script src="script.js"></script>
+    <style>
+        #results div
+        {
+            display: flex;
+            justify-content: space-evenly;
+            margin: 20px 0px;
+        }
+
+        #results span
+        {
+            flex: 1 1 auto;
+        }
+
+        .span--bold
+        {
+            font-weight: bold;
+        }
+    </style>
 </html>

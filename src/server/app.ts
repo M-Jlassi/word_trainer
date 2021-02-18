@@ -25,14 +25,20 @@ app.use("/api/get-first-word", async (req, res, next) =>
   const words: Word[] = await readCsv();
   wordsList = new WordsList(words);
   const firstWord: Word = wordsList.currentWord;
-  res.status(200).json({"firstWord": firstWord.german});
+  res.status(200).json({"firstWord": firstWord.french});
 });
 
 app.use("/api/verify-traduction", async (req, res, next) =>
 {
-  const numberOfTraductionsVerified: number = wordsList.verifyTraduction(req.query.word);
+  const wordEnteredByUser = req.query.word;
+  const {
+    wordVerified,
+    successPercentage,
+    numberOfTraductionsVerified,
+  } = wordsList.verifyTraduction(wordEnteredByUser);
+
   let listIsFinished: boolean = false;
-  let nextWord: undefined | string = wordsList.getNextWord().german;
+  let nextWord: undefined | string = wordsList.getNextWord().french;
   if (numberOfTraductionsVerified == -1)
   {
     listIsFinished = true;
@@ -41,6 +47,10 @@ app.use("/api/verify-traduction", async (req, res, next) =>
 
   res.status(200).json(
   {
+    "germanWordVerified": wordVerified.german,
+    "frenchWordVerified": wordVerified.french,
+    "successPercentage": successPercentage.toString() + "%",
+    "wordEnteredByUser": wordEnteredByUser,  
     "numberOfTraductionsVerified": numberOfTraductionsVerified,
     "nextWord": nextWord,
     "listIsFinished": listIsFinished
