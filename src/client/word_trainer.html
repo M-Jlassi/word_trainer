@@ -1,56 +1,69 @@
 <!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Word trainer</title>
-    </head>
 
-    <body>
-        <h1>Word trainer</h1>
+<head>
+    <meta charset="utf-8">
+    <title>Word trainer</title>
+</head>
+
+<body>
+    <h1>Word trainer</h1>
+    <div>
         <div>
-            <div>
-                <h2>Word to find (French)</h2>
-                <span id="word-to-find"></span>
-            </div>
-            <div>
-                <h2>Your answer (German)</h2>
-                <input id="answer"></input>
-            </div>
+            <h2>Word to find (French)</h2>
+            <span id="word-to-find"></span>
         </div>
         <div>
-            <h2>Number of traductions verified</h2>
-            <span id="number-of-words-verified"></span>
+            <h2>Your answer (German)</h2>
+            <input id="answer"></input>
         </div>
-        <div>
-            <h2>
-                <h2>Results</h2>
-                <div id="results"></div>
-            </h2>
-        </div>
-        <div >
-            <h2>Final results</h2>
-            <div id="final-results"></div>
-        </div>
-    </body>
+    </div>
+    <div>
+        <h2>Number of traductions verified</h2>
+        <span id="number-of-words-verified"></span>
+        <span id="number-of-words-correct"></span>
+        <span id="number-of-words-incorrect"></span>
+    </div>
+    <div>
+        <h2>
+            <h2>Results</h2>
+            <div id="results"></div>
+        </h2>
+    </div>
+    <div>
+        <h2>Final results</h2>
+        <div id="final-results"></div>
+    </div>
+</body>
 
-    <script src="script.js"></script>
-    <style>
-        #results div
-        {
-            display: flex;
-            justify-content: space-evenly;
-            margin: 20px 0px;
-        }
+<script src="script.js"></script>
+<style>
+    #word-to-find {
+        font-size: 30px;
+        margin-left: 20px;
+    }
 
-        #results span
-        {
-            flex: 1 1 auto;
-        }
+    #answer {
+        font-size: 30px;
+        margin-left: 20px;
+        height: 60px;
+        width: 500px;
+    }
 
-        .span--bold
-        {
-            font-weight: bold;
-        }
-    </style>
+    #results div {
+        display: flex;
+        justify-content: space-evenly;
+        margin: 20px 0px;
+    }
+
+    #results span {
+        flex: 1 1 auto;
+    }
+
+    .span--bold {
+        font-weight: bold;
+    }
+</style>
+
 </html>

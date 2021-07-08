@@ -1,35 +1,27 @@
-async function getFirstWord()
-{
+async function getFirstWord() {
   const response = await fetch('api/get-first-word');
   return response.json();
 }
 
-function displayNextWord(nextWord = undefined)
-{
-  if (nextWord != undefined)
-  {
+function displayNextWord(nextWord = undefined) {
+  if (nextWord != undefined) {
     document.getElementById("word-to-find").textContent = nextWord;
     document.getElementById("answer").value = "";
   }
-  else
-  {
-    getFirstWord().then(responseJSON =>
-    {
+  else {
+    getFirstWord().then(responseJSON => {
       document.getElementById("word-to-find").textContent = responseJSON.firstWord;
     });
   }
 }
 
-function verifyWordIfKeyIsEnter(event)
-{
-  if (event.key == "Enter")
-  {
+function verifyWordIfKeyIsEnter(event) {
+  if (event.key == "Enter") {
     const wordToVerify = event.target.value;
     fetch("/api/verify-traduction?word=" + encodeURIComponent(wordToVerify))
       .then(response => response.json())
-      .then(responseJSON =>
-      {
-        updateNumberOfTraductionsVerified(responseJSON.numberOfTraductionsVerified);
+      .then(responseJSON => {
+        updateNumberOfTraductionsVerified(responseJSON);
         displayTraductionResult(responseJSON);
         displayNextWord(responseJSON.nextWord);
         if (responseJSON.listIsFinished)
@@ -38,13 +30,13 @@ function verifyWordIfKeyIsEnter(event)
   }
 }
 
-function updateNumberOfTraductionsVerified(numberOfTraductionsVerified)
-{
+function updateNumberOfTraductionsVerified({ numberOfTraductionsVerified, traductionsHistory }) {
   document.getElementById("number-of-words-verified").textContent = numberOfTraductionsVerified;
+  document.getElementById("number-of-words-correct").textContent = traductionsHistory.correctMatch.toString();
+  document.getElementById("number-of-words-incorrect").textContent = traductionsHistory.incorrectMatch.toString();
 }
 
-function displayTraductionResult(responseJSON)
-{
+function displayTraductionResult(responseJSON) {
   const wrapper = document.createElement("div");
 
   const successPercentage = document.createElement("span");
@@ -57,35 +49,31 @@ function displayTraductionResult(responseJSON)
 
   const germanWordVerified = document.createElement("span");
   germanWordVerified.classList.add("span--bold")
-  germanWordVerified.textContent = responseJSON.germanWordVerified; 
+  germanWordVerified.textContent = responseJSON.germanWordVerified;
   wrapper.appendChild(germanWordVerified);
 
   const frenchWordVerified = document.createElement("span");
-  frenchWordVerified.textContent = responseJSON.frenchWordVerified; 
+  frenchWordVerified.textContent = responseJSON.frenchWordVerified;
   wrapper.appendChild(frenchWordVerified);
 
   const results = document.getElementById("results");
   if (results.children.length == 0)
     results.appendChild(wrapper);
-  else
-  {
+  else {
     const firstChildren = results.children[0];
     results.insertBefore(wrapper, firstChildren);
   }
 }
 
-function displayFinalResults()
-{
+function displayFinalResults() {
   fetch("/api/get-results")
     .then(response => response.json())
     .then(createFinalResultsHTML)
 }
 
-function createFinalResultsHTML(responseJSON)
-{
+function createFinalResultsHTML(responseJSON) {
   const wrapper = document.createElement("div");
-  for (const result of responseJSON.results)
-  {    
+  for (const result of responseJSON.results) {
     const word = document.createElement("div");
 
     const german = document.createElement("div");
@@ -107,7 +95,7 @@ function createFinalResultsHTML(responseJSON)
     word.appendChild(french);
 
     wrapper.appendChild(word);
-    
+
     const traduction = document.createElement("div");
 
     const proposed = document.createElement("div");
@@ -135,8 +123,7 @@ function createFinalResultsHTML(responseJSON)
 }
 
 (displayNextWord)();
-(function ()
-{
+(function () {
   const input = document.getElementById("answer");
   input.addEventListener("keydown", verifyWordIfKeyIsEnter);
 })();
