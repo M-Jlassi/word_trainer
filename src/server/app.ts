@@ -7,20 +7,26 @@ const { MongoClient } = require("mongodb");
 const uri = "mongodb://localhost:27017";
 const client = new MongoClient(uri);
 
+import { words } from "./allWords";
 import { readCsv, Word } from "./read_csv";
 import { WordsList, Result } from "./wordsList";
 
+const update = false;
 const app = express();
-// readCsv()
-//   .then(async words => {
-//     await client.connect();
+client.connect()
+  .then(async () => {
+    const database = client.db('word_trainer');
 
-//     const database = client.db('word_trainer');
-//     const wordsCollection = database.collection('words');
+    if (!update)
+      return;
 
-//     const result = await wordsCollection.insertMany(words);
-//     console.log(`${result.insertedCount} documents were inserted`);
-//   });
+    for (const [category, wordsInCategory] of Object.entries(words)) {
+      const collection = database.collection(category);
+      collection.drop();
+      const result = await collection.insertMany(wordsInCategory);
+      console.log(`${result.insertedCount} documents were inserted`);
+    }
+  });
 
 let wordsList: WordsList;
 
@@ -38,8 +44,13 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/get-first-word", async (req, res, next) => {
-  const words: Word[] = await readCsv();
-  wordsList = new WordsList(words);
+  const database = client.db('word_trainer');
+  const collection = database.collection('relations');
+  const cursor = collection.find({});
+
+  const wordsInCategory = await cursor.toArray();
+
+  wordsList = new WordsList(wordsInCategory);
   const firstWord: Word = wordsList.currentWord;
   res.status(200).json({ "firstWord": firstWord.french });
 });

@@ -1,6 +1,6 @@
 import { Word } from "../read_csv";
 
-const mots: Word[] =
+export const mots: Word[] =
     [
         {
             "german": "der Wissenschaftler",
