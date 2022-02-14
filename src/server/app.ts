@@ -1,9 +1,26 @@
 const express = require('express');
 const path = require('path');
+
+const { MongoClient } = require("mongodb");
+
+// Replace the uri string with your MongoDB deployment's connection string.
+const uri = "mongodb://localhost:27017";
+const client = new MongoClient(uri);
+
 import { readCsv, Word } from "./read_csv";
 import { WordsList, Result } from "./wordsList";
 
 const app = express();
+// readCsv()
+//   .then(async words => {
+//     await client.connect();
+
+//     const database = client.db('word_trainer');
+//     const wordsCollection = database.collection('words');
+
+//     const result = await wordsCollection.insertMany(words);
+//     console.log(`${result.insertedCount} documents were inserted`);
+//   });
 
 let wordsList: WordsList;
 
