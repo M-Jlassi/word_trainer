@@ -1,3 +1,6 @@
+let currentWord = undefined;
+let traduction = undefined;
+
 async function getFirstWord() {
   const response = await fetch('api/get-first-word');
   return response.json();
@@ -10,9 +13,69 @@ function displayNextWord(nextWord = undefined) {
   }
   else {
     getFirstWord().then(responseJSON => {
-      document.getElementById("word-to-find").textContent = responseJSON.firstWord;
+      currentWord = responseJSON.firstWord;
+      const languageToGuess = currentWord.languageToGuess;
+      traduction = languageToGuess === "french" ? currentWord.german : currentWord.french;
+
+      const textToGuess = currentWord[languageToGuess];
+      document.getElementById("word-to-find").textContent = textToGuess;
     });
   }
+}
+
+async function verifyWordIfKeyIsEnterV2(event) {
+  if (event.key === "Enter") {
+    const wordToVerify = event.target.value;
+    document.activeElement.blur();
+    document.getElementById("traduction").textContent = traduction;
+    const confirmation = document.getElementById("confirmation");
+    confirmation.style.display = "block";
+
+    const oui = document.getElementById("oui");
+    const presque = document.getElementById("presque");
+    const non = document.getElementById("non");
+
+    const promise = new Promise(resolve => {
+      oui.onclick = () => resolve("oui");
+      presque.onclick = () => resolve("presque");
+      non.onclick = () => resolve("non");
+      document.addEventListener('keydown', (event) => handleKeyboard(event, resolve));
+    });
+
+    const result = await promise;
+    oui.onclick = null;
+    presque.onclick = null;
+    non.onclick = null;
+    document.removeEventListener("keydown", handleKeyboard);
+
+    const queryString = new URLSearchParams({ ...currentWord, result }).toString();
+
+    const response = await fetch("/api/register-result?" + queryString)
+    const responseJSON = await response.json();
+    currentWord = responseJSON.nextWord;
+    const languageToGuess = currentWord.languageToGuess;
+    traduction = languageToGuess === "french" ? currentWord.german : currentWord.french;
+
+    const textToGuess = currentWord[languageToGuess];
+    document.getElementById("word-to-find").textContent = textToGuess;
+    document.getElementById("answer").value = "";
+    document.getElementById("answer").focus();
+
+    confirmation.style.display = "none";
+  }
+}
+
+const handleKeyboard = (event, resolve) => {
+  if (event.key === "o")
+    resolve("oui");
+  if (event.key === "p")
+    resolve("presque");
+  if (event.key === "n")
+    resolve("non");
+}
+
+function userValidates() {
+  return;
 }
 
 function verifyWordIfKeyIsEnter(event) {
@@ -20,7 +83,10 @@ function verifyWordIfKeyIsEnter(event) {
     const wordToVerify = event.target.value;
     fetch("/api/verify-traduction?word=" + encodeURIComponent(wordToVerify))
       .then(response => response.json())
-      .then(responseJSON => {
+      .then(async responseJSON => {
+        const validation = await askUserValidation();
+        sendUserValidation();
+
         updateNumberOfTraductionsVerified(responseJSON);
         displayTraductionResult(responseJSON);
         displayNextWord(responseJSON.nextWord);
@@ -125,5 +191,6 @@ function createFinalResultsHTML(responseJSON) {
 (displayNextWord)();
 (function () {
   const input = document.getElementById("answer");
-  input.addEventListener("keydown", verifyWordIfKeyIsEnter);
+  // input.addEventListener("keydown", verifyWordIfKeyIsEnter);
+  input.addEventListener("keydown", verifyWordIfKeyIsEnterV2);
 })();

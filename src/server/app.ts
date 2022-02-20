@@ -9,6 +9,7 @@ const client = new MongoClient(uri);
 
 import { words } from "./allWords";
 import { readCsv, Word } from "./read_csv";
+import WordQueue, { WordInMongo } from "./WordQueue";
 import { WordsList, Result } from "./wordsList";
 
 const update = false;
@@ -23,12 +24,17 @@ client.connect()
     for (const [category, wordsInCategory] of Object.entries(words)) {
       const collection = database.collection(category);
       collection.drop();
+      wordsInCategory.forEach(word => {
+        (word as any).languageToGuess = "french";
+        (word as any).knowledgeScore = 0;
+      });
       const result = await collection.insertMany(wordsInCategory);
       console.log(`${result.insertedCount} documents were inserted`);
     }
   });
 
 let wordsList: WordsList;
+let wordQueue: WordQueue;
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname + '/../client/word_trainer.html'));
@@ -44,15 +50,25 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/get-first-word", async (req, res, next) => {
-  const database = client.db('word_trainer');
-  const collection = database.collection('relations');
-  const cursor = collection.find({});
+  const category = "travail";
+  // wordsList = new WordsList(category);
+  wordQueue = new WordQueue(category);
+  await wordQueue.initialize();
 
-  const wordsInCategory = await cursor.toArray();
+  // const firstWord = wordsList.currentWord;
+  const firstWord = wordQueue.currentWord;
+  res.status(200).json({ "firstWord": firstWord });
+});
 
-  wordsList = new WordsList(wordsInCategory);
-  const firstWord: Word = wordsList.currentWord;
-  res.status(200).json({ "firstWord": firstWord.french });
+type UserValidation = "oui" | "presque" | "non";
+export type ResultReceived = WordInMongo & { "result": UserValidation };
+
+app.use("/api/register-result", async (req, res, next) => {
+  const result: ResultReceived = req.query;
+  wordQueue.processResult(result);
+
+  const nextWord = wordQueue.currentWord;
+  res.status(200).json({ "nextWord": nextWord });
 });
 
 app.use("/api/verify-traduction", async (req, res, next) => {

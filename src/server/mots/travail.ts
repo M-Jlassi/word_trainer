@@ -112,7 +112,7 @@ export const mots: Word[] =
         },
         {
             "german": "das Formular ausfüllen",
-            "french": "ausfühlen",
+            "french": "remplir le formulaire",
         },
         {
             "german": "einen Bug reproduzieren",

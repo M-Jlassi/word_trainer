@@ -11,13 +11,20 @@
     <h1>Word trainer</h1>
     <div>
         <div>
-            <h2>Word to find (French)</h2>
+            <h2>Word to find</h2>
             <span id="word-to-find"></span>
         </div>
         <div>
-            <h2>Your answer (German)</h2>
+            <h2>Your answer</h2>
             <input id="answer"></input>
         </div>
+    </div>
+    <div id="confirmation" style="display: none;">
+        <h2>Est-ce juste ?</h2>
+        <p>Traduction: <span id="traduction" style="font-weight: bold;"></span></p>
+        <button id="oui">Oui (o)</button>
+        <button id="presque">Presque (p)</button>
+        <button id="non">Non (n)</button>
     </div>
     <div>
         <h2>Number of traductions verified</h2>
