@@ -35,10 +35,6 @@ export const mots: Word[] =
             "french": "enlever",
         },
         {
-            "german": "einsetzen",
-            "french": "commencer(aussi)",
-        },
-        {
             "german": "wieder gehen",
             "french": "remarcher",
         },
@@ -88,7 +84,7 @@ export const mots: Word[] =
         },
         {
             "german": "abschliessen",
-            "french": "terminer",
+            "french": "conclure",
         },
         {
             "german": "prüfen",
@@ -108,7 +104,7 @@ export const mots: Word[] =
         },
         {
             "german": "liefern",
-            "french": "fournir",
+            "french": "livrer",
         },
         {
             "german": "versprechen",
@@ -164,7 +160,7 @@ export const mots: Word[] =
         },
         {
             "german": "erkennen",
-            "french": "identifer",
+            "french": "identifier / reconnaître",
         },
         {
             "german": "Videos anschauen",
@@ -212,7 +208,23 @@ export const mots: Word[] =
         },
         {
             "german": "die Selbstbefriedigung",
-            "french": "se masturber",
+            "french": "la masturbation",
+        },
+        {
+            "german": "erfinden",
+            "french": "inventer",
+        },
+        {
+            "german": "stechen",
+            "french": "piquer",
+        },
+        {
+            "german": "etwas überwinden",
+            "french": "surmonter qc.",
+        },
+        {
+            "german": "etwas fortsetzen",
+            "french": "continuer / poursuivre quelque chose",
         },
     ];
 

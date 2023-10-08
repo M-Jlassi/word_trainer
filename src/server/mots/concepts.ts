@@ -222,4 +222,28 @@ export const mots: Word[] =
             "german": "das Gleichgewicht, e",
             "french": "l'équilibre",
         },
+        {
+            "german": "der Eindruck, ü...e",
+            "french": "l'impression",
+        },
+        {
+            "german": "sachlich",
+            "french": "concret",
+        },
+        {
+            "german": "der Rausch",
+            "french": "l'ivresse",
+        },
+        {
+            "german": "wissentlich",
+            "french": "intentionnel",
+        },
+        {
+            "german": "die Grundlage, n",
+            "french": "le fondement",
+        },
+        {
+            "german": "das Glied, er",
+            "french": "le maillon",
+        },
     ]

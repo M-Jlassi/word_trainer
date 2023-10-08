@@ -1,4 +1,5 @@
 import * as actions from "./mots/actions";
+import * as animaux from "./mots/animaux";
 import * as comparaison from "./mots/comparaison";
 import * as concepts from "./mots/concepts";
 import * as dénombrement from "./mots/dénombrement";
@@ -21,6 +22,7 @@ import * as émotions from "./mots/émotions";
 export const words =
 {
     "actions": actions.mots,
+    "animaux": animaux.mots,
     "comparaison": comparaison.mots,
     "concepts": concepts.mots,
     "dénombrement": dénombrement.mots,

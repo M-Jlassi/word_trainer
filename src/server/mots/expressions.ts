@@ -246,7 +246,28 @@ export const mots: Word[] =
             "german": "das liegt daran, dass…",
             "french": "c'est dû au fait que…",
         },
+        {
+            "german": "jmdm. einfallen",
+            "french": "venir à l'esprit de quelqu'un",
+        },
+        {
+            "german": "halt",
+            "french": "ma foi (et autres...)",
+        },
+        {
+            "german": "mit Karacho",
+            "french": "à toute berzingue",
+        },
+        {
+            "german": "bestimmt",
+            "french": "sûrement",
+        },
+        {
+            "german": "spiessig",
+            "french": "beauf",
+        },
+        {
+            "german": "sowieso",
+            "french": "de toute façon",
+        },
     ]
-
-
-

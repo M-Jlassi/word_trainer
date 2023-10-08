@@ -134,4 +134,16 @@ export const mots: Word[] =
             "german": "wohl fühlen",
             "french": "être à l'aise",
         },
+        {
+            "german": "verantwortlich",
+            "french": "responsable",
+        },
+        {
+            "german": "aufregend",
+            "french": "excitant / palpitant",
+        },
+        {
+            "german": "gemütlich",
+            "french": "confortable",
+        },
     ];

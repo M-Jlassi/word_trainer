@@ -130,4 +130,8 @@ export const mots: Word[] =
             "german": "die Kassiererin",
             "french": "caissière",
         },
+        {
+            "german": "der Schaffner",
+            "french": "le contrôleur (transports)",
+        },
     ];

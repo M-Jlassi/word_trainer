@@ -206,5 +206,16 @@ export const mots: Word[] =
             "german": "der Smalltalk",
             "french": "le small talk",
         },
+        {
+            "german": "der Kerl, e",
+            "french": "le gars",
+        },
+        {
+            "german": "gemein zu jmdm. sein",
+            "french": "être méchant avec qn.",
+        },
+        {
+            "german": "jemanden betrügen",
+            "french": "berner quelqu'un",
+        },
     ];
-

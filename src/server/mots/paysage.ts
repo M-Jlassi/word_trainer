@@ -30,4 +30,8 @@ export const mots: Word[] =
             "german": "das Gebäude",
             "french": "immeuble",
         },
+        {
+            "german": "die Stelle, n",
+            "french": "l'endroit",
+        },
     ];

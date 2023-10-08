@@ -94,4 +94,40 @@ export const mots: Word[] =
             "german": "der Ziegelstein, e",
             "french": "la brique",
         },
+        {
+            "german": "das Schild, er",
+            "french": "le panneau",
+        },
+        {
+            "german": "der Nagel, ä...",
+            "french": "l'ongle / le clou",
+        },
+        {
+            "german": "die Kiste, n",
+            "french": "la caisse",
+        },
+        {
+            "german": "der Dreck",
+            "french": "la salissure",
+        },
+        {
+            "german": "der Sessel, -",
+            "french": "le fauteuil",
+        },
+        {
+            "german": "die Kette, n",
+            "french": "la chaîne",
+        },
+        {
+            "german": "der Schwamm, ä...e",
+            "french": "l'éponge",
+        },
+        {
+            "german": "der Dampf, ä...e",
+            "french": "la vapeur",
+        },
+        {
+            "german": "der Zahnersatz",
+            "french": "la prothèse dentaire",
+        },
     ]

@@ -102,4 +102,8 @@ export const mots: Word[] =
             "german": "merken",
             "french": "se rendre compte",
         },
+        {
+            "german": "etwas festhalten",
+            "french": "aggriper quelque chose",
+        },
     ];

@@ -74,4 +74,32 @@ export const mots: Word[] =
             "german": "faul sein",
             "french": "avoir la flemme",
         },
+        {
+            "german": "der Vorwurf, ü...e",
+            "french": "le reproche",
+        },
+        {
+            "german": "gruselig",
+            "french": "effrayant",
+        },
+        {
+            "german": "sich verletzen",
+            "french": "se blesser",
+        },
+        {
+            "german": "die Rache, -",
+            "french": "la vengeance",
+        },
+        {
+            "german": "poltern",
+            "french": "faire du vacarme",
+        },
+        {
+            "german": "stöhnen",
+            "french": "gémir",
+        },
+        {
+            "german": "die Lücke",
+            "french": "la lacune",
+        },
     ];

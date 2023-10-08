@@ -134,4 +134,8 @@ export const mots: Word[] =
             "german": "breit",
             "french": "large",
         },
+        {
+            "german": "hauptsächlich",
+            "french": "principalement",
+        },
     ];

@@ -118,4 +118,12 @@ export const mots: Word[] =
             "german": "verlassen",
             "french": "quitter",
         },
+        {
+            "german": "der Rückweg",
+            "french": "le chemin du retour",
+        },
+        {
+            "german": "niederknien",
+            "french": "se mettre à genoux",
+        },
     ];

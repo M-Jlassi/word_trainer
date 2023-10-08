@@ -31,6 +31,7 @@ export default class WordQueue {
 
         const words = await cursor.toArray()
 
+        shuffleArray(words);
         this.words = (words as any).sort((word1, word2) =>
             (word1.knowledgeScore - word2.knowledgeScore));
         this.currentWord = this.getCurrentWord();
@@ -76,6 +77,11 @@ export default class WordQueue {
         this.currentWord = this.flipCurrentWordLanguage();
         this.currentWord.knowledgeScore += knowledgeScore;
 
+        if (queuePercentage === 100) {
+            this.words.push(this.currentWord);
+            return;
+        }
+
         const indexToInsert = Math.ceil((this.words.length + 1) * (queuePercentage / 100));
         this.words.splice(indexToInsert, 0, this.currentWord);
     }
@@ -90,5 +96,15 @@ export default class WordQueue {
 
         this.currentWord.languageToGuess = newLanguage;
         return this.currentWord;
+    }
+}
+
+// From https://stackoverflow.com/a/12646864
+/* Randomize array in-place using Durstenfeld shuffle algorithm */
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
     }
 }

@@ -38,4 +38,8 @@ export const mots: Word[] =
             "german": "einfühlsam",
             "french": "empathique",
         },
+        {
+            "german": "nervig",
+            "french": "soulant",
+        },
     ];

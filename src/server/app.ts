@@ -12,7 +12,7 @@ import { readCsv, Word } from "./read_csv";
 import WordQueue, { WordInMongo } from "./WordQueue";
 import { WordsList, Result } from "./wordsList";
 
-const update = false;
+const update = true;
 const app = express();
 client.connect()
   .then(async () => {
@@ -23,13 +23,24 @@ client.connect()
 
     for (const [category, wordsInCategory] of Object.entries(words)) {
       const collection = database.collection(category);
-      collection.drop();
       wordsInCategory.forEach(word => {
         (word as any).languageToGuess = "french";
         (word as any).knowledgeScore = 0;
       });
-      const result = await collection.insertMany(wordsInCategory);
-      console.log(`${result.insertedCount} documents were inserted`);
+      const updateResult = [];
+      for (const word of wordsInCategory) {
+        updateResult.push(collection.updateOne({
+          "german": word.german,
+        }, {
+          "$set": word
+        }, {
+          "upsert": true
+        }));
+      }
+
+      Promise.all(updateResult).then(results => {
+        console.log(`${results.filter(result => result.upsertedCount > 0).length} inserts and ${results.filter(result => result.modifiedCount > 0).length} updates realized on collection ${category}`)
+      })
     }
   });
 
@@ -50,7 +61,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/get-first-word", async (req, res, next) => {
-  const category = "travail";
+  const category = "actions";
   // wordsList = new WordsList(category);
   wordQueue = new WordQueue(category);
   await wordQueue.initialize();

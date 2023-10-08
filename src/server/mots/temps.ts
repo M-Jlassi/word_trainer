@@ -75,7 +75,7 @@ export const mots: Word[] =
             "french": "durant",
         },
         {
-            "german": "finalement",
+            "german": "endlich",
             "french": "finalement",
         },
         {

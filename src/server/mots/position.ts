@@ -27,16 +27,12 @@ export const mots: Word[] =
             "french": "en haut",
         },
         {
-            "german": "hinunter",
+            "german": "hinunter / runter",
             "french": "en bas",
         },
         {
             "german": "die Stelle",
             "french": "l'endroit",
-        },
-        {
-            "german": "runter",
-            "french": "en bas",
         },
         {
             "german": "gefallen",
@@ -45,5 +41,9 @@ export const mots: Word[] =
         {
             "german": "überall",
             "french": "partout",
+        },
+        {
+            "german": "der Abstand, e",
+            "french": "l'espacement",
         },
     ];
